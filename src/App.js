@@ -15,11 +15,13 @@ function App() {
 
     useEffect(() => {
         fetch('https://jsonplaceholder.typicode.com/users')
-        .then((response) => response.json() )
-        .then((json) => setUsers(json))
-    },[])
-
-    function addUser() {
+            .then((response) => response.json())
+            .then((json) => {
+                setUsers(json);
+                console.log(json); // Now logs the fetched users after updating state
+            });
+    }, []);
+        function addUser() {
         const name = newName.trim();
         const email = newEmail.trim();
         const website = newWebsite.trim();
@@ -64,7 +66,7 @@ function App() {
 
     function updateUser(id) {
         const user = users.find((user) => user.id === id );
-        fetch(`https://jsonplaceholder.typicode.com/users/10`,
+        fetch(`https://jsonplaceholder.typicode.com/users/${id}`,
                 {
                     method: "PUT",
                     body: JSON.stringify(user),
